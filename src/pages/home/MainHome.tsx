@@ -1,9 +1,10 @@
+import HeroSlider from "./HeroSlider";
 
 
 const MainHomePage = () => {
     return (
         <div>
-            Thai is min home page
+            <HeroSlider />
         </div>
     );
 };
