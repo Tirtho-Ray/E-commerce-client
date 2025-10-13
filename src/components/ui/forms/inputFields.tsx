@@ -23,6 +23,7 @@ const InputField = <T extends FieldValues>({
         sm: "p-2 text-sm",
         md: "p-3 text-base",
         lg: "p-4 text-lg"
+
     }[size];
 
     const error = errors[name];
