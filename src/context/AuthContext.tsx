@@ -21,18 +21,33 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         removeToken();
         setUser(null);
     };
-
     useEffect(() => {
         const token = getToken();
-        // console.log(token)
         if (token && !isTokenExpired(token)) {
             const decodedUser = decodeToken(token);
-            setUser(decodedUser);
+
+            if (decodedUser) {
+                setUser(decodedUser);
+                const expireTime = decodedUser.exp * 1000 - Date.now();
+                if (expireTime > 0) {
+                    const timer = setTimeout(() => {
+                        logout();
+                    }, expireTime);
+                    return () => clearTimeout(timer);
+                } else {
+                    logout();
+                }
+            } else {
+                logout();
+            }
         } else {
             logout();
         }
     }, []);
 
+
+
+    // 🔹 auto logout when token expires
     useEffect(() => {
         if (!user) return;
 
