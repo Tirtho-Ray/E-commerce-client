@@ -5,3 +5,18 @@ export const axiosInstance = axios.create({
 });
 
 
+axiosInstance.interceptors.response.use(
+  (response) => response,
+  async (error) => {
+    if (error.response?.status === 401) {
+      const refreshToken = localStorage.getItem("refreshToken");
+      if (refreshToken) {
+        const newTokenResponse = await axios.post("/auth/refresh-token", { refreshToken });
+        localStorage.setItem("accessToken", newTokenResponse.data.accessToken);
+        error.config.headers.Authorization = `Bearer ${newTokenResponse.data.accessToken}`;
+        return axiosInstance(error.config); 
+      }
+    }
+    return Promise.reject(error);
+  }
+);
