@@ -58,7 +58,7 @@ const Navbar = () => {
                             <div>Dashboard</div>
                         ) : (
                             <Link
-                                to="/seller"
+                                to="/request-seller"
                                 className="hover:text-orange-500 transition-colors"
                                 onClick={() => setMenuOpen(false)}
                             >
@@ -91,7 +91,7 @@ const Navbar = () => {
                             Dashboard
                         </button>
                     ) : (
-                        <Link to="/seller" className="hover:text-orange-500 transition-colors">
+                        <Link to="/request-seller" className="hover:text-orange-500 transition-colors">
                             Become a Seller
                         </Link>
                     )}

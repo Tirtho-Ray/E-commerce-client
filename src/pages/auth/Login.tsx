@@ -1,21 +1,55 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React from "react";
-import { Link } from "react-router";
+import { Link, useLocation, useNavigate } from "react-router";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import InputField from "../../components/ui/forms/inputFields";
 import { loginValidation } from "../../utils/validation/loginValidation";
 import type { TLogin } from "../../types/auth/login";
+import { useLogin } from "../../hooks/mutations/useAuth";
+import toast from "react-hot-toast";
 
 const Login: React.FC = () => {
+    const { mutate } = useLogin();
+    const navigate = useNavigate()
+    const location = useLocation();
+    const redirectTo = location.state?.redirectTo || "/"
+    console.log(redirectTo);
+
     const { register, handleSubmit, formState: { errors }
     } = useForm<TLogin>({
         // mode: "all",
         resolver: zodResolver(loginValidation),
     });
 
-    const onSubmit = async (data: TLogin) => {
-        console.log("Login Data:", data);
+    const onSubmit = (formData: TLogin) => {
+        mutate(formData, {
+            onSuccess: (data: any) => {
+                // console.log(data)
+                const { accessToken, refreshToken } = data.data || {};
+                if (accessToken && refreshToken) {
+                    localStorage.setItem("accessToken", accessToken);
+                    localStorage.setItem("refreshToken", refreshToken);
+                }
+                // console.log(accessToken)
+                if (data.success === false) {
+                    toast.error(data.message || "Login failed");
+                    return;
+                }
+                if (data.success == true) {
+                    // console.log(data.message)
+                    toast.success(data.message);
+                    navigate(redirectTo, { replace: true });
+                }
+            },
+            onError: (err: any) => {
+                const message = err.message
+                console.log(message)
+                toast.error(message);
+            },
+        });
     };
+
 
     return (
         <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-900 via-slate-900 to-black text-white px-4 py-8">
@@ -48,7 +82,7 @@ const Login: React.FC = () => {
 
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <div className="space-y-5">
-                        <InputField<TLogin>
+                        <InputField
                             size="sm"
                             name="email"
                             type="email"
@@ -57,7 +91,7 @@ const Login: React.FC = () => {
                             register={register}
                             errors={errors}
                         />
-                        <InputField<TLogin>
+                        <InputField
                             size="sm"
                             name="password"
                             type="password"

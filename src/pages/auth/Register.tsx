@@ -1,20 +1,34 @@
 import React from "react";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import InputField from "../../components/ui/forms/inputFields";
 import { useForm } from "react-hook-form";
 import type { TRegister } from "../../types/auth/register";
 import { zodResolver } from '@hookform/resolvers/zod';
 import { registerValidation } from "../../utils/validation/registerValidation";
+import { useRegister } from "../../hooks/mutations/useAuth";
+
 
 
 const Register: React.FC = () => {
+    const navigate = useNavigate()
+    const { mutate, isLoading, error } = useRegister();
     const { register, handleSubmit, formState: { errors } } = useForm<TRegister>({
         resolver: zodResolver(registerValidation),
     });
 
-    const onSubmit = async (data: TRegister) => {
-        console.log(data)
-    }
+
+    const onSubmit = (formData: TRegister) => {
+        mutate(formData, {
+            onSuccess: (response) => {
+                const userId = response?.data.userId
+                // console.log("User ID:", response?.data?.userId);
+                navigate("/verify-otp", { state: { userId } })
+            },
+            onError: (error) => {
+                console.error("Registration failed:", error);
+            },
+        });
+    };
 
     return (
         <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-900 via-slate-900 to-black text-white px-4 py-4">

@@ -1,0 +1,8 @@
+/* In your global styles or Tailwind config */
+.input {
+    @apply border border-gray-300 p-2 w-full rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500;
+}
+
+.error {
+    @apply text-red-500 text-sm mt-1;
+}
