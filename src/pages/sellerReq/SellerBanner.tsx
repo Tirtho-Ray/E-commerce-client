@@ -7,6 +7,7 @@ import {
     FaHeadset,
     FaShoppingBasket,
 } from 'react-icons/fa';
+import { Link } from 'react-router';
 
 const SellerBanner: React.FC = () => {
     const benefits = [
@@ -25,9 +26,11 @@ const SellerBanner: React.FC = () => {
                 <h1 className="text-3xl sm:text-4xl font-extrabold leading-snug">
                     OPEN YOUR <span className="text-[#2c0d67]">QUICK BUY</span> ONLINE STORE FOR FREE
                 </h1>
-                <button className="mt-6 bg-[#4807de] text-[#ffffff] font-bold px-6 py-3 rounded-full shadow hover:scale-105 transition-transform">
-                    Be a Seller Today
-                </button>
+                <Link to='/request-seller-form'>
+                    <button className="mt-6 bg-[#4807de] text-[#ffffff] font-bold px-6 py-3 rounded-full shadow hover:scale-105 transition-transform">
+                        Be a Seller Today
+                    </button>
+                </Link>
             </div>
 
             {/* Right Section */}
