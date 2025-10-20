@@ -27,7 +27,7 @@ const HeroSlider: React.FC = () => {
                 slidesPerView={1}
                 loop={true}
                 autoplay={{
-                    delay: 3500,
+                    delay: 9500,
                     disableOnInteraction: false,
                 }}
                 pagination={{
