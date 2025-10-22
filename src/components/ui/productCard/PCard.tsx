@@ -2,6 +2,7 @@ import { FaHeart, FaShoppingCart } from "react-icons/fa";
 import { formatDateRange } from "../../../utils/formatDate/formatDate";
 
 interface TPCard {
+    id?: string;
     name: string;
     image: string;
     discount?: number;
@@ -30,10 +31,11 @@ interface TPCard {
     rating?: string;
     onAddToCart?: () => void;
     onWishlist?: () => void;
-    onQuickView?: () => void;
+    onQuickView?: (id: string) => void;
 }
 
 const PCard: React.FC<TPCard> = ({
+    id,
     name,
     image,
     discount,
@@ -49,7 +51,7 @@ const PCard: React.FC<TPCard> = ({
 
     return (
         <div
-            onClick={onQuickView}
+            onClick={() => onQuickView?.(id!)}
             className="relative bg-white rounded-xl md:rounded-2xl shadow-2xl overflow-hidden font-sans h-[200px] w-[160px] md:h-[290px] md:w-[190px] lg:h-[350px] lg:w-[250px]"
         >
             <div className="relative h-[100px] md:h-[160px] lg:h-[200px] group overflow-hidden">
@@ -123,7 +125,7 @@ const PCard: React.FC<TPCard> = ({
                     ) : null}
                 </div>
             </div>
-        </div>
+        </div >
     );
 };
 
