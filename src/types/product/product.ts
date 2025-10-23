@@ -27,7 +27,7 @@ export interface TProduct {
     description: string;
     price: number;    
     quantity: number; 
-    category: string;
+    category:  { name: string };
     subCategory: string;
 
     variants?: TVariant[];
