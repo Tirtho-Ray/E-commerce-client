@@ -6,6 +6,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Autoplay } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
+import { useNavigate } from "react-router";
 
 type TCategory = {
     name: string;
@@ -15,6 +16,11 @@ type TCategory = {
 const CategorySection = () => {
     const { data } = useGetCategory();
     const cardsRef = useRef<HTMLDivElement[]>([]);
+    const navigate = useNavigate();
+
+    const handleCategoryClick = (categoryName: string) => {
+        navigate(`/products?category=${encodeURIComponent(categoryName.toLowerCase())}`);
+    };
 
     // GSAP hover animation
     useEffect(() => {
@@ -69,6 +75,7 @@ const CategorySection = () => {
                     <SwiperSlide
                         key={item.name}
                         style={{ width: "auto" }}
+                        onClick={() => handleCategoryClick(item.name)}
                     >
                         <div className="mt-2 md:mt-4 mb-5 rounded-xl">
                             <div
