@@ -52,7 +52,7 @@ const PCard: React.FC<TPCard> = ({
     return (
         <div
             onClick={() => onQuickView?.(id!)}
-            className="relative bg-white rounded-xl md:rounded-2xl shadow-2xl overflow-hidden font-sans h-[200px] w-[160px] md:h-[290px] md:w-[190px] lg:h-[350px] lg:w-[250px]"
+            className="relative bg-white rounded-xl md:rounded-2xl shadow-2xl overflow-hidden font-sans h-[200px] w-[160px] md:h-[290px] md:w-[183px] lg:h-[350px] lg:w-[245px]"
         >
             <div className="relative h-[100px] md:h-[160px] lg:h-[200px] group overflow-hidden">
                 <img
