@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect } from "react";
 import { useAuth } from "../useAuth";
 import { useLocalCart } from "../../utils/cart/localCart";
@@ -10,13 +11,10 @@ export const useSyncCartOnLogin = () => {
 
   useEffect(() => {
     if (user && cart.length > 0) {
-      // Sync local cart to server
       cart.forEach(item => {
         const { id, quantity, ...rest } = item;
-        addToCart(id, quantity, rest); // server call
+        addToCart(id, quantity, rest);
       });
-
-      // Clear local cart after syncing
       clearCart();
     }
   }, [user]);
